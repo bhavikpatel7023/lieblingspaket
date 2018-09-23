@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include lieblingspaket *.css
+recursive-include lieblingspaket *.csv
+recursive-include lieblingspaket *.html
+recursive-include lieblingspaket *.ico
+recursive-include lieblingspaket *.js
+recursive-include lieblingspaket *.json
+recursive-include lieblingspaket *.md
+recursive-include lieblingspaket *.png
+recursive-include lieblingspaket *.py
+recursive-include lieblingspaket *.svg
+recursive-include lieblingspaket *.txt
+recursive-exclude lieblingspaket *.pyc

@@ -1,0 +1,7 @@
+## Lieblingspaket
+
+Lieblingspaket
+
+#### License
+
+MIT

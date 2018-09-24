@@ -34,7 +34,7 @@ def execute(filters=None):
 				item_reorder_level = item_reorder_detail_map[item + warehouse]["warehouse_reorder_level"]
 				item_reorder_qty = item_reorder_detail_map[item + warehouse]["warehouse_reorder_qty"]
 
-			report_data = [item, item_map[item]["item_name"], item_map[item]["ean"],
+			report_data = [item, item_map[item]["item_name"], item_map[item]["ean"],item_map[item]["pieces_per_carton"],item_map[item]["export_cartons_per_palette"],item_map[item]["volume"],item_map[item]["weight_in_kg"],
 				item_map[item]["item_group"],
 				item_map[item]["brand"],
 				item_map[item]["description"], warehouse,
@@ -66,6 +66,10 @@ def get_columns():
 		_("Item")+":Link/Item:100",
 		_("Item Name")+"::150",
 		_("EAN")+"::100",
+		_("No Of Export Carton")+"::100",
+		_("Number of Palettes")+"::100",
+		_("Volume in CBM")+":Float:100",
+		_("Weight in CBM")+":Float:100",
 		_("Item Group")+":Link/Item Group:100",
 		_("Brand")+":Link/Brand:90",
 		_("Description")+"::140",
@@ -210,7 +214,7 @@ def get_item_details(items, sle, filters):
 
 	if items:
 		for item in frappe.db.sql("""
-			select name, item_name,ean,description, item_group, brand, stock_uom
+			select name, item_name,ean,pieces_per_carton,export_cartons_per_palette,volume,weight_in_kg,description, item_group, brand, stock_uom
 			from `tabItem`
 			where name in ({0}) and ifnull(disabled, 0) = 0
 			""".format(', '.join(['"' + frappe.db.escape(i, percent=False) + '"' for i in items])), as_dict=1):

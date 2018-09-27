@@ -40,6 +40,7 @@ def execute(filters=None):
 				((qty_dict.bal_val / (item_map[item]["pieces_per_carton"] if item_map[item]["pieces_per_carton"] > 0 else 1)) / (item_map[item]["export_cartons_per_palette"] if item_map[item]["export_cartons_per_palette"] > 0 else 1)),
 				item_map[item]["volume"],
 				item_map[item]["weight_in_kg"],
+				(qty_dict.bal_val / (item_map[item]["average_sales_per_day"] if item_map[item]["average_sales_per_day"] > 0 else 1)),
 				item_map[item]["item_group"],
 				item_map[item]["brand"],
 				item_map[item]["description"], warehouse,
@@ -75,6 +76,7 @@ def get_columns():
 		_("Number of Palettes")+":Float:100",
 		_("Volume in CBM")+":Float:100",
 		_("Weight in CBM")+":Float:100",
+		_("Stock Range")+":Float:100",
 		_("Item Group")+":Link/Item Group:100",
 		_("Brand")+":Link/Brand:90",
 		_("Description")+"::140",
@@ -219,7 +221,7 @@ def get_item_details(items, sle, filters):
 
 	if items:
 		for item in frappe.db.sql("""
-			select name, item_name,ean,pieces_per_carton,export_cartons_per_palette,volume,weight_in_kg,description, item_group, brand, stock_uom
+			select name, item_name,ean,pieces_per_carton,export_cartons_per_palette,volume,weight_in_kg,average_sales_per_day,description, item_group, brand, stock_uom
 			from `tabItem`
 			where name in ({0}) and ifnull(disabled, 0) = 0
 			""".format(', '.join(['"' + frappe.db.escape(i, percent=False) + '"' for i in items])), as_dict=1):

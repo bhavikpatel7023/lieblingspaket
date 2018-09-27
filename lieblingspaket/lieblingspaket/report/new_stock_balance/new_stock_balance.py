@@ -34,7 +34,12 @@ def execute(filters=None):
 				item_reorder_level = item_reorder_detail_map[item + warehouse]["warehouse_reorder_level"]
 				item_reorder_qty = item_reorder_detail_map[item + warehouse]["warehouse_reorder_qty"]
 
-			report_data = [item, item_map[item]["item_name"], item_map[item]["ean"],item_map[item]["pieces_per_carton"],item_map[item]["export_cartons_per_palette"],item_map[item]["volume"],item_map[item]["weight_in_kg"],
+			report_data = [item, item_map[item]["item_name"],
+				item_map[item]["ean"],
+				(qty_dict.bal_val / (item_map[item]["pieces_per_carton"] if item_map[item]["pieces_per_carton"] > 0 else 1)),
+				((qty_dict.bal_val / (item_map[item]["pieces_per_carton"] if item_map[item]["pieces_per_carton"] > 0 else 1)) / (item_map[item]["export_cartons_per_palette"] if item_map[item]["export_cartons_per_palette"] > 0 else 1)),
+				item_map[item]["volume"],
+				item_map[item]["weight_in_kg"],
 				item_map[item]["item_group"],
 				item_map[item]["brand"],
 				item_map[item]["description"], warehouse,
@@ -65,9 +70,9 @@ def get_columns():
 	columns = [
 		_("Item")+":Link/Item:100",
 		_("Item Name")+"::150",
-		_("EAN")+"::100",
-		_("No Of Export Carton")+"::100",
-		_("Number of Palettes")+"::100",
+		_("EAN")+":Data:100",
+		_("No Of Export Carton")+":Float:100",
+		_("Number of Palettes")+":Float:100",
 		_("Volume in CBM")+":Float:100",
 		_("Weight in CBM")+":Float:100",
 		_("Item Group")+":Link/Item Group:100",

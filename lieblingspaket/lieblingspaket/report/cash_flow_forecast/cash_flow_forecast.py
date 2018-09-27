@@ -25,7 +25,7 @@ def get_columns():
 	"""return columns"""
 
 	columns = [
-		_("Order No")+":Link/Sales Order:150",
+		_("Order No")+":Link/Purchase Order:150",
 		_("Date of Payment ")+":Data:150",
 		_("Amount of Payment")+":Float:150",
 		_("Currency of Payment")+":Link/Currency:150"		

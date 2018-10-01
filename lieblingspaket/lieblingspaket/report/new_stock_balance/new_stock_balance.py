@@ -75,7 +75,7 @@ def get_columns():
 		_("No Of Export Carton")+":Float:100",
 		_("Number of Palettes")+":Float:100",
 		_("Volume in CBM")+":Float:100",
-		_("Weight in CBM")+":Float:100",
+		_("Weight in Kg")+":Float:100",
 		_("Stock Range")+":Float:100",
 		_("Item Group")+":Link/Item Group:100",
 		_("Brand")+":Link/Brand:90",

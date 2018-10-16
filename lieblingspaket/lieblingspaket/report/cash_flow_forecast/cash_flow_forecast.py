@@ -26,7 +26,9 @@ def get_columns():
 
 	columns = [
 		_("Order No")+":Link/Purchase Order:150",
-		_("Date of Payment ")+":Data:150",
+		_("Date of Payment ")+":Date:150",
+		_("Company")+":Link/Company:150",
+		_("Supplier")+":Link/Supplier:150",
 		_("Amount of Payment")+":Float:150",
 		_("Currency of Payment")+":Link/Currency:150"		
 	]
@@ -36,5 +38,5 @@ def get_columns():
 	
 def get_data(filters):
 	"""return data"""
-	return frappe.db.sql("""select schedule.parent,schedule.due_date,schedule.payment_amount,sorder.currency from `tabPayment Schedule` as schedule INNER JOIN `tabPurchase Order` as sorder ON schedule.parent = sorder.name and sorder.docstatus=1 and ( schedule.due_date between %s and %s ) order by schedule.due_date asc ;""",(filters.get("from_date"),filters.get("to_date")))
+	return frappe.db.sql("""select schedule.parent,schedule.due_date,sorder.company,sorder.supplier,schedule.payment_amount,sorder.currency from `tabPayment Schedule` as schedule INNER JOIN `tabPurchase Order` as sorder ON schedule.parent = sorder.name and sorder.docstatus=1 and ( schedule.due_date between %s and %s ) where sorder.status = 'Completed' order by schedule.due_date asc ;""",(filters.get("from_date"),filters.get("to_date")))
 
